@@ -21,14 +21,20 @@ This repo uses the provided data files on
 - Notebook [02_analysis.ipynb](notebooks/02_analysis.ipynb) Looks at daily volumes of risk factors and admin 0/1/2 in both languages. Computes some simple correlations between these in each language.
 - Notebook [03_validation.ipynb](notebooks/03_validation.ipynb)
 
+## TODO
+- Combine AR and EN using z-score normalised time series
+- If admin 1 and 2 are sparse then aggregate up to admin 1
+
+
 ## Future Work
 
 There is much that could be improved with more time.
 
 - Without knowing where the taxonomy terms came from, it is likely that it could be augmented using a snowball approach. i.e. look for new n-grams which coincide uniquely with n-grams in the taxonomy.
 - Instead of using keyword matching, use an LLM to tag articles with risk factors in either (i) a zero shot fashion, possibly using official definitions of food insecurity terms or (ii) a few-shot learning approach with some examples of articles and their tags or (iii) a supervised-fine tuning approach in which the LLM is fine-tuned on articles and tags. Note that these would need to be evaluated.
-- The most important task is validation of this approach using some ground truth data. This would nee to overlap in the time period and countries and ideally be at sub-national granularity. It is unlikely that the frequency would be more than monthly which is challenging with only 1 month of text corpus data.
-- Much f the code is copy-pasted to repeat for Arabic and English. Ideally this would all be wrapped in a function with a language flag.
+- The most important task is validation of this approach using some ground truth data. This would need to overlap in the time period and countries and ideally be at sub-national granularity. It is unlikely that the frequency would be more than monthly which is challenging with only 1 month of text corpus data.
+- Much of the code is copy-pasted to repeat for Arabic and English. Ideally this would all be wrapped in a function with a language flag.
+- The most useful signal from the news articles is likely to be when the _proportion_ of articles tagged with a location that matches the taxonomy increases (rather than simply the number matching a locaiton and taxonomy).
 
 ## Project Organization
 
