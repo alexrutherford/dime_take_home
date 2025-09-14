@@ -45,7 +45,7 @@ The high level approach was to first carefully examine the data provided in orde
 | land-related issues        | 0.23        |
 | political instability      | 0.28        |
 
-- **Admin 2 level names appear much more frquently than admin 2** Surprisingly, in both AR and EN news articles most admin 2 locations appeared more than once, compred to admin 1 locations. One possible approach could be to aggregate mentions of admin 2 locations to their parent admin 1 location if required to overcome sparsity and/or to match ground truth data available only at admin 1 level.
+- **Admin 2 level names appear much more frequently than admin 1** Surprisingly, in both AR and EN news articles most admin 2 locations appeared more than once, compred to admin 1 locations. One possible approach could be to aggregate mentions of admin 2 locations to their parent admin 1 location if required to overcome sparsity and/or to match ground truth data available only at admin 1 level.
 
 |           | % Non-zero Admin Level 2 (EN corpus) | % Non-zero Admin Level 2 (AR corpus) |
 |-----------|---------------------------------------|---------------------------------------|
