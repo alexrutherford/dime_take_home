@@ -56,9 +56,31 @@ The high level approach was to first carefully examine the data provided in orde
 | ps        | 93.8%                                | 93.8%                                |
 
 
-- **Potential ground truth data available** World Bank provides [estimated food price data](https://microdata.worldbank.org/index.php/catalog/4483/get-microdata) on a sub-national basis including in Iraq, Lebanon and Syria. This has monthly frequency and includes variables such as food price inflation. This could potentially be used to validate or test a predictive model based on information extracted form the news corpus.
+- **Potential ground truth data available** World Bank provides [estimated food price data](https://microdata.worldbank.org/index.php/catalog/4483/get-microdata) on a sub-national basis including in Iraq, Lebanon and Syria. This has monthly frequency and includes variables such as food price inflation. This could potentially be used to validate or test a predictive model based on information extracted form the news corpus. Datasets from [Humanitarian Data Exchange](https://data.humdata.org/dataset/syrian-arab-republic-food-security-agriculture-severity-classification#) were discarded due to incorrect time period or lack of sub-national data.
 
 ![Food price inflation data in ](figures/wb_food_inflation_IRQ_adm2_multiplot.png)
+
+- **Very preliminary results show correlation between signals** Food price inflation figures above were correlated with the number of news article mentions for each admin 2 region (restricted to SY,IQ,LB in the WB dataset and those which could be matched by name). Some weak correlations were observed in the intuitively correct direction i.e. More news mentions correlate with more inflation.
+
+Many caveats apply here
+
+EN
+
+| Country | Admin Level 2 Regions | Pearson Correlation | Spearman Correlation |
+|---------|----------------------|-------------------|--------------------|
+| sy      | 21                   | -0.30             | -0.19              |
+| lb      | 15                   | -0.05             | 0.06               |
+| iq      | 11                   | -0.32             | -0.09              |
+
+AR
+
+| Country | Admin Level 2 Regions | Pearson Correlation | Spearman Correlation |
+|---------|----------------------|-------------------|--------------------|
+| sy      | 26                   | -0.21             | 0.05               |
+| lb      | 19                   | -0.04             | 0.09               |
+| iq      | 14                   | -0.19             | 0.01               |
+
+
 
 ## Future Work
 
