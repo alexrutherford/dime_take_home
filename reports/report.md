@@ -1,3 +1,6 @@
+# DIME Take Home Assignment - Alex Rutherford
+[see [GitHub repo for more details](https://github.com/alexrutherford/dime_take_home)]
+
 ## High Level Description
 
 This repo uses the provided data files on
@@ -22,9 +25,9 @@ The high level approach was to first carefully examine the data provided in orde
 
 ## Findings & Steps Taken
 
-- **Arabic terms in DS1 were missing** These were filled in using an LLM
-- **English and Arabic corpora comparable** The daily volume of articles and article lengths were similar
-- **Taxonomy in DS1 is sparse** Only a small proportion of articles matched food security taxonomy: 90.6% and 94.9% missing in English and Arabic corpora respectively. However > 90% matched some location strings. This suggests that the taxonomy should be expanded to make more matches.
+- **Arabic terms in DS1 were missing** These were filled in using an LLM.
+- **English and Arabic corpora comparable** The daily volume of articles and article lengths were similar.
+- **Taxonomy in DS1 is sparse** Only a small proportion of articles matched food security taxonomy: 90.6% and 94.9% missing in English and Arabic corpora respectively. However > 90% matched some location strings. This suggests that the taxonomy could be expanded to make more matches.
 - **Limited date range** The corpora in DS3 are taken from June and July 2024. This gives 30 days of data which (i) limits potential for observing meaningful differences over time as food insecurity changes slowly and (ii) limits ability to construct time series of changes to compare to ground truth data
 - **Most location matches were at admin 2 level**
 - **Some noisy taxonomy terms** The Jordanian admin 2 division 'هیت' may transliterate as 'heet' or 'hit' leading to many false positives. Locations could be more carefully matches by using Named Entity Extraction to disambiguate 'hit' as the location and 'hit' as the verb.
@@ -65,10 +68,12 @@ There is much that could be improved with more time.
 
 - Instead of using keyword matching, use an LLM to tag articles with risk factors in either (i) a zero shot fashion, possibly using official definitions of food insecurity terms or (ii) a few-shot learning approach with some examples of articles and their tags or (iii) a supervised-fine tuning approach in which the LLM is fine-tuned on articles and tags. Note that these would need to be evaluated.
 
-- The most important task is validation of this approach using some ground truth data. This would need to overlap in the time period and countries and ideally be at sub-national granularity. It is unlikely that the frequency would be more than monthly which is challenging with only 1 month of text corpus data. Instead of calculating time-series correlations, admin 1/2 regions could be ranked on the basis of food security indicators and compared to rankings based on matches in news articles.
+- In some information environments, much news is produced and consumed in other formats than text i.e. video and audio and through non-mainstream channels e.g. blogs/social media. 
+
+- The most important task is validation of the signal extracted from the news articles using some ground truth data. This would need to overlap in the time period and countries and be at sub-national granularity for operational utility. It is unlikely that the frequency would be more than monthly which is challenging with only 1 month of text corpus data. Instead of calculating time-series correlations, admin 1/2 regions could be ranked on the basis of food security indicators and compared to rankings based on matches in news articles.
 
 - Much of the code is copy-pasted to repeat for Arabic and English. Ideally this would all be wrapped in a function with a language flag.
 
-- The most useful signal from the news articles is likely to be when the _proportion_ of articles tagged with a location that matches the taxonomy increases (rather than simply the number matching a locaiton and taxonomy).
+- The most useful signal from the news articles is likely to be when the _proportion_ of articles tagged with a location that matches the taxonomy increases (rather than simply the number matching a locaiton and taxonomy). Some correction based on the population or population density of the administrative division could be appropriate.
 
-- There are many potential ways to deal with the two separate corpora. The simplest might be to convert daily volumes to z-scores and combining: `z_total(t) = z_en(t) + z_ar(t)`
+- There are many potential ways to deal with the two separate corpora. The simplest might be to convert daily volumes to z-scores and combining: `z_total(t) = z_en(t) + z_ar(t)`.
