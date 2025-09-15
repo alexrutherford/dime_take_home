@@ -27,11 +27,11 @@ The high level approach was to first carefully examine the data provided in orde
 
 - **Arabic terms in DS1 were missing** These were filled in using an LLM.
 - **English and Arabic corpora comparable** The daily volume of articles and article lengths were similar.
-- **Taxonomy in DS1 is sparse** Only a small proportion of articles matched food security taxonomy: 90.6% and 94.9% missing in English and Arabic corpora respectively. However > 90% matched some location strings. This suggests that the taxonomy could be expanded to make more matches.
+- **Taxonomy in DS1 is sparse** Only a small proportion of articles matched food security taxonomy: 90.6% and 94.9% of articles had no matches in English and Arabic corpora respectively. However > 90% matched some location strings. This suggests that a small expansion in the taxonomy could give a big increase in articles with location and food security signal.
 - **Limited date range** The corpora in DS3 are taken from June and July 2024. This gives 30 days of data which (i) limits potential for observing meaningful differences over time as food insecurity changes slowly and (ii) limits ability to construct time series of changes to compare to ground truth data
 - **Most location matches were at admin 2 level**
-- **Some noisy taxonomy terms** The Jordanian admin 2 division 'هیت' may transliterate as 'heet' or 'hit' leading to many false positives. Locations could be more carefully matches by using Named Entity Extraction to disambiguate 'hit' as the location and 'hit' as the verb.
-- **Prevalence of risk fctors differed between corpora** In the English corpus _forced displacement_ and _conflict and violence_ were the dominant risk factors. Whereas in the AR corpus, _forced displacement_ appeared much less. This demonstrates the potential biases that are present in news articles and which will lead to varying emphaseses from different sources. 
+- **Some noisy taxonomy terms** The Jordanian admin 2 division 'هیت' may transliterate as 'hit' leading to many false positives. Locations could be more carefully matched by using Named Entity Extraction to disambiguate 'hit' as the location and 'hit' as the verb.
+- **Prevalence of risk fctors differed between corpora** In the English corpus _forced displacement_ and _conflict and violence_ were the dominant risk factors. Whereas in the AR corpus, _forced displacement_ appeared much less. This demonstrates the potential biases that are present in news articles and which will lead to varying emphases from different sources. 
 ![Risk factors in EN corpus](figures/daily_article_counts_by_risk_factor_en.png)
 ![Risk factors in AR corpus](figures/daily_article_counts_by_risk_factor_ar.png)
 
@@ -60,9 +60,7 @@ The high level approach was to first carefully examine the data provided in orde
 
 ![Food price inflation data in ](figures/wb_food_inflation_IRQ_adm2_multiplot.png)
 
-- **Very preliminary results show correlation between signals** Food price inflation figures above were correlated with the number of news article mentions for each admin 2 region (restricted to SY,IQ,LB in the WB dataset and those which could be matched by name). Some weak correlations were observed in the intuitively correct direction i.e. More news mentions correlate with more inflation.
-
-Many caveats apply here
+- **Very preliminary results show correlation between signals** Food price inflation figures above were correlated with the number of news article mentions for each admin 2 region (restricted to SY,IQ,LB in the WB dataset and those which could be matched by name). Some weak correlations were observed in the intuitively correct direction i.e. More news mentions correlate with more inflation. Many caveats apply here; the sample size of matched districts is small, 
 
 EN
 
@@ -90,11 +88,13 @@ There is much that could be improved with more time.
 
 - Instead of using keyword matching, use an LLM to tag articles with risk factors in either (i) a zero shot fashion, possibly using official definitions of food insecurity terms or (ii) a few-shot learning approach with some examples of articles and their tags or (iii) a supervised-fine tuning approach in which the LLM is fine-tuned on articles and tags. Note that these would need to be evaluated.
 
-- In some information environments, much news is produced and consumed in other formats than text i.e. video and audio and through non-mainstream channels e.g. blogs/social media. 
+- In some information environments, much news is produced and consumed in other formats than text i.e. video and audio and through non-mainstream channels e.g. blogs/social media. For example the [GDELT project](https://www.gdeltproject.org/data.html#rawdatafiles) extracts n-grams from TV transcription.
 
 - The most important task is validation of the signal extracted from the news articles using some ground truth data. This would need to overlap in the time period and countries and be at sub-national granularity for operational utility. It is unlikely that the frequency would be more than monthly which is challenging with only 1 month of text corpus data. Instead of calculating time-series correlations, admin 1/2 regions could be ranked on the basis of food security indicators and compared to rankings based on matches in news articles.
 
-- Much of the code is copy-pasted to repeat for Arabic and English. Ideally this would all be wrapped in a function with a language flag.
+- Any predictive potential should be evaluated against a suitable baseline. For example, what is the error rate when simply using the value of the last tick as the prediction for the next tick?
+
+- Much of the code is copy-pasted to repeat for Arabic and English. Ideally this would all be wrapped in a function with a language flag and use clean vectorisation and split-apply-combine.
 
 - The most useful signal from the news articles is likely to be when the _proportion_ of articles tagged with a location that matches the taxonomy increases (rather than simply the number matching a locaiton and taxonomy). Some correction based on the population or population density of the administrative division could be appropriate.
 
